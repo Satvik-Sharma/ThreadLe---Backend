@@ -17,17 +17,28 @@ router.post('/signup', async function (req, res) {
       username,
       email,
       isAdmin: newUser.isAdmin,
-      createdAt: newUser.createdAt,
+      createdAt: newUser.createdAt
     })
 
     // Set cookie first, then send JSON
     res
-      .cookie('token', token)
+      .cookie('token', token, {
+        httpOnly: true, // prevents JS access
+        secure: true, // must be true for HTTPS
+        sameSite: 'none', // allows cross-site cookies (needed if frontend is on different domain)
+        maxAge: 24 * 60 * 60 * 1000 // 1 day
+      })
       .status(201)
       .json({
         success: true,
         message: 'User created successfully',
-        user: { username, email, _id: newUser._id, isAdmin: newUser.isAdmin, createdAt: newUser.createdAt }
+        user: {
+          username,
+          email,
+          _id: newUser._id,
+          isAdmin: newUser.isAdmin,
+          createdAt: newUser.createdAt
+        }
       })
   } catch (e) {
     console.error(e)
@@ -59,12 +70,17 @@ router.post('/login', async function (req, res) {
       username: user.username,
       email: user.email,
       isAdmin: user.isAdmin,
-      createdAt: user.createdAt,
+      createdAt: user.createdAt
     })
 
     // Set cookie first, then send JSON
     res
-      .cookie('token', token)
+      .cookie('token', token, {
+        httpOnly: true, // prevents JS access
+        secure: true, // must be true for HTTPS
+        sameSite: 'none', // allows cross-site cookies (needed if frontend is on different domain)
+        maxAge: 24 * 60 * 60 * 1000 // 1 day
+      })
       .status(200)
       .json({
         success: true,
@@ -74,7 +90,7 @@ router.post('/login', async function (req, res) {
           email: user.email,
           _id: user._id,
           isAdmin: user.isAdmin,
-          createdAt: user.createdAt,
+          createdAt: user.createdAt
         }
       })
   } catch (e) {
