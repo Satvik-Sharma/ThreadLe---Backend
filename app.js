@@ -17,9 +17,7 @@ const cors = require('cors')
 
 app.use(
   cors({
-    origin: (origin, callback) => {
-      callback(null, origin || true) // allow all origins
-    },
+    origin: "https://thread-le-frontend.vercel.app/",
     credentials: true
   })
 )
