@@ -17,7 +17,9 @@ const cors = require('cors')
 
 app.use(
   cors({
-    origin: "https://thread-le-frontend.vercel.app",
+    origin: (origin, callback) => {
+      callback(null, origin || true) // allow all origins
+    },
     credentials: true
   })
 )
@@ -25,7 +27,7 @@ app.use(
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(cookieParser({ secure: false }))
+app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/api', indexRouter)
