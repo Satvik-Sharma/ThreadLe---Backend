@@ -24,8 +24,8 @@ router.post('/signup', async function (req, res) {
     res
       .cookie('token', token, {
         httpOnly: true, // prevents JS access
-        secure: true, // must be true for HTTPS
-        sameSite: 'none', // allows cross-site cookies (needed if frontend is on different domain)
+        secure: false, // must be true for HTTPS
+        sameSite: 'lax', // allows cross-site cookies (needed if frontend is on different domain)
         maxAge: 24 * 60 * 60 * 1000 // 1 day
       })
       .status(201)
@@ -77,8 +77,8 @@ router.post('/login', async function (req, res) {
     res
       .cookie('token', token, {
         httpOnly: true, // prevents JS access
-        secure: true, // must be true for HTTPS
-        sameSite: 'none', // allows cross-site cookies (needed if frontend is on different domain)
+        secure: false, // must be true for HTTPS
+        sameSite: 'lax', // allows cross-site cookies (needed if frontend is on different domain)
         maxAge: 24 * 60 * 60 * 1000 // 1 day
       })
       .status(200)
